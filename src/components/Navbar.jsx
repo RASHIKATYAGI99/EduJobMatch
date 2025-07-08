@@ -1,14 +1,17 @@
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-function Navbar() {
+const Navbar = () => {
   return (
-    <nav className="flex gap-6 p-4 bg-[#292929] shadow-lg">
-      <Link to="/" className="text-lg font-semibold text-white hover:text-blue-400">Home</Link>
-      <Link to="/about" className="text-lg font-semibold text-white hover:text-blue-400">About</Link>
-      <Link to="/jobs" className="text-lg font-semibold text-white hover:text-blue-400">Jobs</Link>
-      <Link to="/exams" className="text-lg font-semibold text-white hover:text-blue-400">Exams</Link>
+    <nav style={{ padding: "1rem", backgroundColor: "#f5f5f5" }}>
+      <ul style={{ display: "flex", listStyle: "none", gap: "1rem", margin: 0 }}>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/eligibility">Eligibility</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+      </ul>
     </nav>
   );
-}
+};
 
 export default Navbar;
