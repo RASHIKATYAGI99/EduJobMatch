@@ -1,15 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+// src/components/Navbar.jsx
+
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav style={{ padding: "1rem", backgroundColor: "#f5f5f5" }}>
-      <ul style={{ display: "flex", listStyle: "none", gap: "1rem", margin: 0 }}>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/eligibility">Eligibility</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
-      </ul>
+    <nav className="navbar">
+      <h2 style={{ color: "#fff" }}>EduJobMatch</h2>
+      <div>
+        <NavLink to="/" end className="nav" activeclassname="active">Home</NavLink>
+        <NavLink to="/about" className="nav" activeclassname="active">About</NavLink>
+        <NavLink to="/eligibility" className="nav" activeclassname="active">Eligibility</NavLink>
+        <NavLink to="/contact" className="nav" activeclassname="active">Contact</NavLink>
+      </div>
     </nav>
   );
 };
