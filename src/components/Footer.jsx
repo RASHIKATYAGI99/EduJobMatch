@@ -1,8 +1,11 @@
-import React from "react";
+// src/components/Footer.jsx
+
+import React from 'react';
+import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="footer">
       <p>&copy; 2025 EduJobMatch. All rights reserved.</p>
     </footer>
   );
