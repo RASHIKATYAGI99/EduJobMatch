@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import banner from "../assets/banner.png";
+import ServerStatus from "../components/ServerStatus";
 
 const Home = () => {
   useEffect(() => {
@@ -19,6 +20,9 @@ const Home = () => {
       <p className="home-subtitle">
         Check your eligibility for exams and apply directly!
       </p>
+
+      {/* ✅ Show server status */}
+      <ServerStatus />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import About from './pages/About';
 import Eligibility from './pages/Eligibility';
 import Contact from './pages/Contact';
 import NotFound from "./pages/NotFound";
+import Jobs from './pages/Jobs';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/eligibility" element={<Eligibility />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/jobs" element={<Jobs />} />
 
         </Routes>
       </div>

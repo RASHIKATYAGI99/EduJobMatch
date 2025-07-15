@@ -1,24 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const eligibilityData = {
-  "10th": [
-    { exam: "NDA", criteria: "Age 16.5–19.5 years, 10th pass" },
-    { exam: "Railway Group D", criteria: "10th pass or ITI" }
-  ],
-  "12th": [
-    { exam: "SSC CHSL", criteria: "12th pass with basic computer knowledge" },
-    { exam: "Indian Navy AA/SSR", criteria: "12th pass with 60% in PCM" }
-  ],
-  "Graduation": [
-    { exam: "IBPS PO", criteria: "Graduate in any discipline" },
-    { exam: "GATE", criteria: "Engineering graduate" }
-  ],
-  "Post-Graduation": [
-    { exam: "UGC NET", criteria: "Post-graduation with 55%+" },
-    { exam: "Research Fellowships", criteria: "Master's with relevant subject" }
-  ]
-};
-
 const Eligibility = () => {
   useEffect(() => {
     document.title = "EduJobMatch | Check Eligibility";
@@ -26,11 +7,27 @@ const Eligibility = () => {
 
   const [education, setEducation] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const selectedData = eligibilityData[education] || [];
-    setResults(selectedData);
+    if (!education) return;
+
+    setLoading(true);
+    setError("");
+    setResults([]);
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/eligibility/${education}`);
+      if (!res.ok) throw new Error("Failed to fetch eligibility data");
+      const data = await res.json();
+      setResults(data);
+    } catch (err) {
+      setError("Error fetching data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,6 +55,9 @@ const Eligibility = () => {
         <br />
         <button type="submit">Check Eligibility</button>
       </form>
+
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {results.length > 0 && (
         <div>

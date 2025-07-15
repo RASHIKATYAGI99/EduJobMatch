@@ -1,21 +1,41 @@
-import React, { useEffect } from "react";
+// src/pages/Jobs.jsx
+import React, { useEffect, useState } from "react";
 
 const Jobs = () => {
+  const [jobs, setJobs] = useState([]);
+
   useEffect(() => {
-    document.title = "EduJobMatch | Jobs";
+    document.title = "EduJobMatch | Latest Jobs";
+
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/jobs");
+        const data = await response.json();
+        setJobs(data);
+      } catch (error) {
+        console.error("Failed to fetch jobs:", error);
+      }
+    };
+
+    fetchJobs();
   }, []);
 
   return (
     <div className="container">
-      <h2>Available Jobs & Exams</h2>
-      <p>Explore a curated list of current government exams and job vacancies.</p>
-
-      <ul>
-        <li><strong>SSC CGL 2025</strong> — Last Date: 30th July 2025</li>
-        <li><strong>UPSC Civil Services</strong> — Last Date: 18th August 2025</li>
-        <li><strong>RRB NTPC</strong> — Last Date: 15th September 2025</li>
-        <li><strong>IBPS Clerk</strong> — Last Date: 5th August 2025</li>
-      </ul>
+      <h2>Latest Job Opportunities</h2>
+      {jobs.length === 0 ? (
+        <p>No jobs available at the moment.</p>
+      ) : (
+        <ul>
+          {jobs.map((job, index) => (
+            <li key={index}>
+              <strong>{job.title}</strong> <br />
+              <span>Education: {job.education}</span><br />
+              <span>Deadline: {job.deadline}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
