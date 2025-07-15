@@ -1,5 +1,3 @@
-// src/pages/Jobs.jsx
-
 import React, { useEffect } from "react";
 
 const Jobs = () => {
@@ -7,45 +5,16 @@ const Jobs = () => {
     document.title = "EduJobMatch | Jobs";
   }, []);
 
-  const jobs = [
-    {
-      title: "Junior Engineer - Indian Railways",
-      eligibility: "Diploma/B.Tech in relevant stream",
-      location: "Pan India",
-      lastDate: "August 15, 2025",
-    },
-    {
-      title: "Bank Clerk - IBPS",
-      eligibility: "Graduate in any discipline",
-      location: "All India",
-      lastDate: "September 5, 2025",
-    },
-    {
-      title: "Research Assistant - DRDO",
-      eligibility: "M.Sc or M.Tech",
-      location: "Delhi",
-      lastDate: "August 25, 2025",
-    },
-    {
-      title: "Customer Support Executive - Infosys",
-      eligibility: "12th pass / Any graduate",
-      location: "Remote",
-      lastDate: "Rolling Basis",
-    },
-  ];
-
   return (
     <div className="container">
-      <h2>Latest Job Openings</h2>
+      <h2>Available Jobs & Exams</h2>
+      <p>Explore a curated list of current government exams and job vacancies.</p>
+
       <ul>
-        {jobs.map((job, index) => (
-          <li key={index}>
-            <strong>{job.title}</strong> <br />
-            Eligibility: {job.eligibility} <br />
-            Location: {job.location} <br />
-            Last Date to Apply: {job.lastDate}
-          </li>
-        ))}
+        <li><strong>SSC CGL 2025</strong> — Last Date: 30th July 2025</li>
+        <li><strong>UPSC Civil Services</strong> — Last Date: 18th August 2025</li>
+        <li><strong>RRB NTPC</strong> — Last Date: 15th September 2025</li>
+        <li><strong>IBPS Clerk</strong> — Last Date: 5th August 2025</li>
       </ul>
     </div>
   );
