@@ -1,46 +1,45 @@
+const Contact = require('./models/Contact');
+
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const connectDB = require("./config/db"); // ✅ MongoDB connection
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+
+// ✅ Connect to MongoDB
+connectDB();
 
 // ✅ API to confirm server is running
 app.get('/api/status', (req, res) => {
   res.json({ status: 'Backend is working' });
 });
 
-// ✅ Contact form endpoint - Saves to contacts.json
-app.post("/api/contact", (req, res) => {
+// ✅ Contact form endpoint - Saves to MongoDB
+app.post("/api/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
+  // Step 1: Validate the form fields
   if (!name || !email || !message) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  const newEntry = {
-    name,
-    email,
-    message,
-    timestamp: new Date().toISOString(),
-  };
+  try {
+    // Step 2: Save to MongoDB using Mongoose
+    const newContact = await Contact.create({ name, email, message });
 
-  const filePath = path.join(__dirname, "contacts.json");
-
-  let existingMessages = [];
-  if (fs.existsSync(filePath)) {
-    const data = fs.readFileSync(filePath, "utf8");
-    existingMessages = JSON.parse(data);
+    // Step 3: Send back success response
+    res.status(201).json({ message: "Message saved to MongoDB!", data: newContact });
+  } catch (error) {
+    // Step 4: Handle error if something goes wrong
+    console.error("Error saving contact:", error);
+    res.status(500).json({ error: "Failed to save contact message." });
   }
-
-  existingMessages.push(newEntry);
-
-  fs.writeFileSync(filePath, JSON.stringify(existingMessages, null, 2));
-
-  res.status(200).json({ message: "Message saved successfully!" });
 });
+
 
 // ✅ Mock eligibility data
 const eligibilityData = {
