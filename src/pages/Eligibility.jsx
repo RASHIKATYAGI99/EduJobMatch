@@ -12,19 +12,17 @@ const Eligibility = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!education) return;
-
     setLoading(true);
     setError("");
     setResults([]);
 
     try {
       const res = await fetch(`http://localhost:5000/api/eligibility/${education}`);
-      if (!res.ok) throw new Error("Failed to fetch eligibility data");
+      if (!res.ok) throw new Error("Failed to fetch data");
       const data = await res.json();
       setResults(data);
     } catch (err) {
-      setError("Error fetching data. Please try again later.");
+      setError("Unable to fetch eligibility data.");
     } finally {
       setLoading(false);
     }
@@ -44,6 +42,7 @@ const Eligibility = () => {
           name="education"
           value={education}
           onChange={(e) => setEducation(e.target.value)}
+          required
         >
           <option value="">--Select--</option>
           <option value="10th">10th</option>
