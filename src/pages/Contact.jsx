@@ -11,6 +11,8 @@ const Contact = () => {
     message: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   const [responseMsg, setResponseMsg] = useState("");
   const [error, setError] = useState("");
 
@@ -22,31 +24,39 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setResponseMsg("");
-    setError("");
+  e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:5000/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+  // Simple Validation
+  if (!formData.name || !formData.email || !formData.message) {
+    toast.error("All fields are required!");
+    return;
+  }
 
-      const data = await res.json();
+  try {
+    setLoading(true); // start loading
+    const response = await fetch("http://localhost:5000/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-      if (!res.ok) {
-        throw new Error(data.error || "Something went wrong.");
-      }
-
-      setResponseMsg(data.message);
-      setFormData({ name: "", email: "", message: "" }); // clear form
-    } catch (err) {
-      setError(err.message);
+    if (!response.ok) {
+      throw new Error("Failed to send message.");
     }
-  };
+
+    const data = await response.json();
+    console.log("Server Response:", data);
+    toast.success("Message sent successfully!");
+    setFormData({ name: "", email: "", message: "" });
+  } catch (error) {
+    console.error("Submission Error:", error);
+    toast.error("Failed to send message. Please try again.");
+  } finally {
+    setLoading(false); // stop loading
+  }
+};
 
   return (
     <div className="container">
@@ -78,7 +88,16 @@ const Contact = () => {
           placeholder="Type your message..." required
         ></textarea>
 
-        <button type="submit">Send Message</button>
+        <button
+  type="submit"
+  disabled={loading}
+  className={`px-4 py-2 rounded text-white ${
+    loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+  }`}
+>
+  {loading ? "Sending..." : "Send Message"}
+</button>
+
       </form>
 
       {responseMsg && <p style={{ color: "green", marginTop: "10px" }}>{responseMsg}</p>}
