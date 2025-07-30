@@ -74,6 +74,6 @@ app.get("/api/eligibility/:education", (req, res) => {
 });
 
 // ✅ Start server on port 5173
-app.listen(5173, () => {
-  console.log("Server running on http://localhost:5173");
+app.listen(5000, () => {
+  console.log("Server running on http://localhost:5000");
 });
