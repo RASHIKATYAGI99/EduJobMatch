@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Eligibility.css"; // Importing custom styles
 
 const Eligibility = () => {
   useEffect(() => {
@@ -61,13 +62,14 @@ const Eligibility = () => {
       {results.length > 0 && (
         <div>
           <h3>Eligible Exams/Jobs:</h3>
-          <ul>
+          <div className="grid-container">
             {results.map((item, index) => (
-              <li key={index}>
-                <strong>{item.exam}:</strong> {item.criteria}
-              </li>
+              <div className="grid-card" key={index}>
+                <h4>{item.exam}</h4>
+                <p>{item.criteria}</p>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
