@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/banner.png'; 
 
 const Navbar = () => {
   return (
@@ -18,7 +19,18 @@ const Navbar = () => {
             z-index: 100;
           }
 
-          .navbar h2 {
+          .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+
+          .logo {
+            height: 40px;
+            width: auto;
+          }
+
+          .brand-name {
             font-size: 24px;
             color: #fff;
             margin: 0;
@@ -49,7 +61,6 @@ const Navbar = () => {
             font-weight: 600;
           }
 
-          /* Optional underline effect for active links */
           .active::after {
             content: '';
             position: absolute;
@@ -80,7 +91,10 @@ const Navbar = () => {
       </style>
 
       <nav className="navbar">
-        <h2>EduJobMatch</h2>
+        <div className="logo-container">
+          <img src={logo} alt="EduJobMatch Logo" className="logo" />
+          <h2 className="brand-name">EduJobMatch</h2>
+        </div>
         <div>
           <NavLink to="/" end className="nav" activeClassName="active">Home</NavLink>
           <NavLink to="/about" className="nav" activeClassName="active">About</NavLink>
